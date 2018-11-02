@@ -1,8 +1,10 @@
 %{
     #include <stdio.h>
-    int num_lines = 0;
+   
 %}
  
+%option yylineno
+
 %%
  
 
@@ -14,9 +16,8 @@
 [E-e][N-n][D-d]					{ printf("EXIT\n");} 
 [/;/]						{ printf("END_STATEMENT\n");}
 [0-9]+\.[0-9]+					{ printf("FLOAT\n");}
-\t+|\s+						; //ignore these chars!
-\n						++num_lines;
-.+						{ printf("ERROR: invalid input on line %d\n", num_lines);}
+[ |\t+|\n+]					; //ignore these chars!
+.+						{ printf("ERROR: invalid input on line %d\n", yylineno);}
 
 %%
  
